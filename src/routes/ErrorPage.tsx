@@ -1,9 +1,8 @@
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
+import { CssVarsProvider} from '@mui/joy/styles';
 import ErrorIcon from '@mui/icons-material/Error';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
-import { useState } from 'react';
 
 function ErrorPage() {
     const error = useRouteError();
