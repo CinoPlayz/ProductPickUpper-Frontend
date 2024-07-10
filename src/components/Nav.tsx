@@ -1,4 +1,3 @@
-import '@fontsource/inter';
 import { useColorScheme } from '@mui/joy/styles';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
@@ -6,13 +5,15 @@ import ListDivider from '@mui/joy/ListDivider';
 import ListItemButton from '@mui/joy/ListItemButton';
 import Home from '@mui/icons-material/Home';
 import Person from '@mui/icons-material/Person';
-import { Link as RouterLink } from 'react-router-dom';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import IconButton from '@mui/joy/IconButton';
 import Dropdown from '@mui/joy/Dropdown';
 import MenuButton from '@mui/joy/MenuButton';
 import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
+import { Link as RouterLink} from '@tanstack/react-router'
+
+
 
 function ModeToggle() {
     const { mode, setMode } = useColorScheme();
@@ -28,7 +29,6 @@ function ModeToggle() {
         </IconButton >
     );
 }
-
 
 function Nav() {
     return (
@@ -54,7 +54,7 @@ function Nav() {
                     <ModeToggle />
                     <Dropdown>
                         <MenuButton
-                        variant="plain"
+                            variant="plain"
                             role="menuitem"
                         >
                             <Person />
@@ -68,7 +68,6 @@ function Nav() {
 
                 </ListItem>
             </List>
-
         </>
     )
 }

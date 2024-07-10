@@ -1,22 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Home from './routes/Home.tsx'
-import Login from './routes/Login.tsx'
-import ErrorPage from "./routes/ErrorPage.tsx";
-import {  createBrowserRouter,  RouterProvider } from "react-router-dom";
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
+import NotFound from './components/NotFound'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    errorElement: <ErrorPage />,
-  },
-]);
+const router = createRouter({ routeTree, defaultNotFoundComponent: NotFound })
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />    
