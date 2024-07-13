@@ -3,15 +3,36 @@ import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import Button from '@mui/joy/Button';
 import { createFileRoute } from '@tanstack/react-router'
 import Nav from '../components/Nav';
+import FormHelperText from '@mui/joy/FormHelperText';
+import { InfoOutlined } from '@mui/icons-material';
 
 export const Route = createFileRoute('/login')({
     component: Login,
 })
 
+interface LoginFormInput {
+    email: string;
+    password: string;
+}
+
 function Login() {
+
+    const { control, formState: { errors }, handleSubmit } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        }
+    });
+
+    const onSubmit: SubmitHandler<LoginFormInput> = data => {
+        console.log(data)
+    };
+
+
     return (
         <>
             <Nav />
@@ -33,26 +54,42 @@ function Login() {
                     </Typography>
                     <Typography level="body-sm">Sign in to continue.</Typography>
                 </div>
-                <FormControl>
-                    <FormLabel>Email</FormLabel>
-                    <Input
-                        // html input attribute
-                        name="email"
-                        type="email"
-                        placeholder="johndoe@email.com"
-                    />
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <Input
-                        name="password"
-                        type="password"
-                        placeholder="password"
-                    />
-                </FormControl>
-                <Button sx={{ mt: 1 /* margin top */ }}>
-                    Log in
-                </Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <FormControl {...errors.email?.type === "required" && { error: true }}>
+                        <FormLabel>Email</FormLabel>
+                        <Controller
+                            name="email"
+                            rules={{ required: true }}
+                            control={control}
+                            render={({ field }) => <Input {...field} placeholder='johndoe@email.com' type='email' />}
+                        />
+                        {errors.email?.type === "required" &&
+                            (<FormHelperText>
+                                <InfoOutlined />
+                                Required
+                            </FormHelperText>)
+                        }
+
+                    </FormControl>
+                    <FormControl {...errors.password?.type === "required" && { error: true }}>
+                        <FormLabel>Password</FormLabel>
+                        <Controller
+                            name="password"
+                            rules={{ required: true }}
+                            control={control}
+                            render={({ field }) => <Input {...field} placeholder='password' type='password' />}
+                        />
+                        {errors.password?.type === "required" &&
+                            (<FormHelperText>
+                                <InfoOutlined />
+                                Required
+                            </FormHelperText>)
+                        }
+                    </FormControl>
+                    <Button sx={{ mt: 1 /* margin top */ }} type='submit'>
+                        Log in
+                    </Button>
+                </form>
             </Sheet>
         </>
     )
